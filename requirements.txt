@@ -1,0 +1,6 @@
+pandas
+h5py
+keras
+numpy
+tensorflow
+tf-models-official
