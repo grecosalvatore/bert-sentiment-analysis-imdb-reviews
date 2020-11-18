@@ -16,8 +16,8 @@ import datetime
 import h5py
 
 OUTPUT_FOLDER = "saved_models/fine_tuned"
-TF_HUB_URL = "https://tfhub.dev/tensorflow/bert_en_uncased_L-12_H-768_A-12/2"  # version 2 of TF Hub pre-trained BERT
-# !wget "https://storage.googleapis.com/tfhub-modules/tensorflow/bert_en_uncased_L-12_H-768_A-12/2.tar.gz"
+TF_HUB_URL = "https://tfhub.dev/tensorflow/bert_en_uncased_L-12_H-768_A-12/3"  # version 2 of TF Hub pre-trained BERT
+# !wget "https://storage.googleapis.com/tfhub-modules/tensorflow/bert_en_uncased_L-12_H-768_A-12/3.tar.gz"
 
 MAX_SEQ_LEN = 512   # Max possible sequence length for BERT base is 512
 
@@ -32,11 +32,11 @@ class BertModel:
             1.1) model = BertModel() -> Create an instance of the BertModel wrapper
             1.2) model.set_experiment_description("This description string will be saved in the metadata folder") [Optional] -> Set the description information
             1.3) Alternative 1:
-                    wget "https://storage.googleapis.com/tfhub-modules/tensorflow/bert_en_uncased_L-12_H-768_A-12/2.tar.gz" -> Download the pre-trained BERT TF Hub model on disk
-                    model.load_pre_trained_bert_tf_hub_from_dir("/bert_en_uncased_L-12_H-768_A-12_2") -> Load the pre-trained BERT TF Hub model from disk
+                    wget "https://storage.googleapis.com/tfhub-modules/tensorflow/bert_en_uncased_L-12_H-768_A-12/3.tar.gz" -> Download the pre-trained BERT TF Hub model on disk
+                    model.load_pre_trained_bert_tf_hub_from_dir("/bert_en_uncased_L-12_H-768_A-12_3") -> Load the pre-trained BERT TF Hub model from disk
                 Alternative 2:
-                    model.load_pre_trained_bert_tf_hub_from_url("https://tfhub.dev/tensorflow/bert_en_uncased_L-12_H-768_A-12/2") -> Load the pre-trained BERT TF Hub model from URL
-            1.4) model.create_model(n_out_units=4, max_seq_length=128, activation_function="softmax", dropout_perc=0.2) -> Create the Keras model
+                    model.load_pre_trained_bert_tf_hub_from_url("https://tfhub.dev/tensorflow/bert_en_uncased_L-12_H-768_A-12/3") -> Load the pre-trained BERT TF Hub model from URL
+            1.4) model.create_model(n_out_units=1, max_seq_length=256, activation_function="softmax", dropout_perc=0.2) -> Create the Keras model
             1.5) model.compile(learning_rate=2e-5) -> compile the model
             1.6) model.fit(train_data, test_data, epochs=4, batch_size=32, verbose=1, n_train=number_train_examples, n_test=number_test_examples) -> train the model
             1.7) model.save()
