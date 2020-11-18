@@ -5,7 +5,7 @@ import matplotlib.pyplot as plt
 
 import re
 import os
-
+import csv
 
 def load_imdb_dataset(train_slice, test_slice, as_supervised=False):
     (train_data, test_data), info = tfds.load('imdb_reviews',
@@ -68,7 +68,7 @@ def plot_history(history):
     plt.show()
     return
 
-
+"""
 def bert_fine_tuning():
     label_list = [0, 1]
     n_out_units = 1
@@ -101,3 +101,35 @@ def bert_fine_tuning():
     df_test.to_csv(os.path.join(out_path, "df_test.csv"))
 
     return
+"""
+
+def load_fine_tuned_model(directory_path):
+    # Create the model wrapper object
+    model = bert_model.BertModel()
+
+    # Load the model from disk
+    model.load_model(directory_path)
+
+    # Get the tokenizer
+    tokenizer = model.get_tokenizer()
+
+    return model, tokenizer
+
+def load_dataset_from_csv():
+
+    return
+
+
+if __name__ == "__main__":
+
+    model, tokenizer = load_fine_tuned_model("saved_models/fine_tuned/20201117_bert_model_imdb_reviews_exp_0")
+
+    df = load_dataset_from_csv("../datasets/ag_news_subset/df_train_cleaned.csv")
+
+    #features, output_path = extract_and_save_embeddings(df,
+    #                                                    model,
+    #                                                    filename="train_embeddings_0_1_2_3.hdf5",
+    #                                                    output_dir="/Users/salvatore/PycharmProjects/ConceptDriftManager/saved_embeddings/20201116_bert_model_0_1_2_3_embeddings"
+    #                                                    )
+
+
