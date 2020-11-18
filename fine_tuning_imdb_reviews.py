@@ -3,9 +3,12 @@ import bert_model
 import tensorflow_datasets as tfds
 import matplotlib.pyplot as plt
 
+import pandas as pd
+
 import re
 import os
 import csv
+
 
 def load_imdb_dataset(train_slice, test_slice, as_supervised=False):
     (train_data, test_data), info = tfds.load('imdb_reviews',
@@ -115,16 +118,37 @@ def load_fine_tuned_model(directory_path):
 
     return model, tokenizer
 
-def load_dataset_from_csv():
 
-    return
+def load_dataset_from_csv(dataset_path):
+    df = pd.read_csv(dataset_path)
+    return df
+
+
+def get_label_given_probabilities(p):
+    if p >= 0.5:
+        return "Positive"
+    return "Negative"
 
 
 if __name__ == "__main__":
 
     model, tokenizer = load_fine_tuned_model("saved_models/fine_tuned/20201117_bert_model_imdb_reviews_exp_0")
 
-    df = load_dataset_from_csv("../datasets/ag_news_subset/df_train_cleaned.csv")
+    df = load_dataset_from_csv("datasets/df_test.csv")
+
+    print(df.shape)
+
+    input_texts = ["This film was very awful", "This film was very good", "The film is very bad, however the book is wonderful", "The film is not as good as the book!"]
+
+    predictions = model.predict(input_texts)
+
+    # Examples of predictions
+    print("{} -> probability: {} -> label: {} ".format(input_texts[0], predictions[0], get_label_given_probabilities(predictions[0])))
+    print("{} -> probability: {} -> label: {} ".format(input_texts[1], predictions[1], get_label_given_probabilities(predictions[1])))
+    print("{} -> probability: {} -> label: {} ".format(input_texts[2], predictions[2], get_label_given_probabilities(predictions[2])))
+    print("{} -> probability: {} -> label: {} ".format(input_texts[3], predictions[3], get_label_given_probabilities(predictions[3])))
+
+    # Examples of tokenization
 
     #features, output_path = extract_and_save_embeddings(df,
     #                                                    model,
