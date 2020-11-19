@@ -105,14 +105,30 @@ class BertModel:
         self.tokenizer = tokenization.FullTokenizer(self.vocab_file, self.do_lower_case)
         return
 
+    def load_tokenizer_from_pickle(self, model_directory, tokenizer_filename="bert_tokenizer.pickle"):
+        """ Loads the tokenizer from a saved pickle file.
+
+        This method is an alternative way to load the tokenizer with respect to tokenization.FullTokenizer(vocab_file, do_lower_case=True).
+        During training the instance of the FullTokenizer class has been saved into a file named: `bert_tokenizer.pickle`.
+        Args:
+            model_directory (str): Path of the model's folder
+            tokenizer_filename (str): Filename of the saved tokenizer
+        Returns:
+            tokenization.FullTokenizer() : Instance of the FullTokenizer class
+        """
+        with open(os.path.join(model_directory, tokenizer_filename), "rb") as tokenizer_file:
+            self.tokenizer = pickle.load(tokenizer_file)
+        return self.tokenizer
+
     def load_model(self, model_directory):
         """Loads the fine-tuned model from directory.
 
         Args:
             model_directory (str): PATH string of the fine-tuned model's directory on local disk
         """
-        with open(os.path.join(model_directory, "bert_tokenizer.pickle"), "rb") as tokenizer_file:
-            self.tokenizer = pickle.load(tokenizer_file)
+        self.tokenizer = tokenization.FullTokenizer(vocab_file=os.path.join(model_directory, "assets", "vocab.txt"), do_lower_case=True)
+
+        print(type(self.tokenizer))
 
         self.model = keras.models.load_model(model_directory)
 

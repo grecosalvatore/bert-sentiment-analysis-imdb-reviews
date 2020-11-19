@@ -106,6 +106,7 @@ def bert_fine_tuning():
     return
 """
 
+
 def load_fine_tuned_model(directory_path):
     # Create the model wrapper object
     model = bert_model.BertModel()
@@ -149,11 +150,12 @@ if __name__ == "__main__":
     print("{} -> probability: {} -> label: {} ".format(input_texts[3], predictions[3], get_label_given_probabilities(predictions[3])))
 
     # Examples of tokenization
+    print(type(tokenizer))
+    tokens = tokenizer.tokenize(input_texts[0])
+    print("Tokens: {}".format(tokens))
+    word_ids = tokenizer.convert_tokens_to_ids(tokens)
+    print("Word Ids: {}".format(word_ids))
 
-    #features, output_path = extract_and_save_embeddings(df,
-    #                                                    model,
-    #                                                    filename="train_embeddings_0_1_2_3.hdf5",
-    #                                                    output_dir="/Users/salvatore/PycharmProjects/ConceptDriftManager/saved_embeddings/20201116_bert_model_0_1_2_3_embeddings"
-    #                                                    )
+
 
 
